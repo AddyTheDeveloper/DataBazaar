@@ -2,7 +2,7 @@
 
 DataBazaar is a modern, premium Market Databank Generation and Sharing Platform built with the Laravel framework. It empowers users to submit, explore, and analyze market pricing data across various locations with real-time visualizations and a sophisticated administrative moderation workflow.
 
-![DataBazaar Hero](https://via.placeholder.com/1200x600.png?text=DataBazaar+Market+Intelligence+Platform)
+
 
 ## 🚀 Features
 

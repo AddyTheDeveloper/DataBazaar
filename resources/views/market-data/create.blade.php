@@ -6,7 +6,7 @@
     <div class="py-8">
         <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="card p-8">
-                <form method="POST" action="{{ route('market-data.store') }}" class="space-y-6">
+                <form method="POST" action="{{ route('market-data.store') }}" class="space-y-6" x-data="formSubmit" @submit="submit">
                     @csrf
                     <div>
                         <label for="product_name" class="form-label">Product name</label>
@@ -46,7 +46,11 @@
                     </div>
                     <div class="flex justify-end gap-3 pt-2">
                         <a href="{{ route('market-data.index') }}" class="btn-secondary">Cancel</a>
-                        <button type="submit" class="btn-primary">Submit Entry</button>
+                        <button type="submit" class="btn-primary" :disabled="submitting" :class="{ 'opacity-75 cursor-wait': submitting }">
+                            <svg x-show="submitting" class="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+                            <span x-show="!submitting">Submit Entry</span>
+                            <span x-show="submitting" x-cloak>Submitting...</span>
+                        </button>
                     </div>
                 </form>
             </div>

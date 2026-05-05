@@ -65,6 +65,16 @@
                 </div>
 
                 <div class="w-full max-w-[400px]">
+                    @if(session('error'))
+                    <div class="mb-4 p-4 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20">
+                        <p class="text-sm text-red-700 dark:text-red-400">{{ session('error') }}</p>
+                    </div>
+                    @endif
+                    @if(session('success'))
+                    <div class="mb-4 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
+                        <p class="text-sm text-emerald-700 dark:text-emerald-400">{{ session('success') }}</p>
+                    </div>
+                    @endif
                     {{ $slot }}
                 </div>
 

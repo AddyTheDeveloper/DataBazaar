@@ -106,6 +106,10 @@
                 <p class="text-xs text-slate-500">{{ Auth::user()->email }}</p>
             </div>
             <x-responsive-nav-link :href="route('profile.edit')">Profile</x-responsive-nav-link>
+            <button onclick="document.querySelector('[x-data=\'darkMode\']').__x.$data.toggle()" class="block w-full text-left px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                <span class="dark:hidden">🌙 Dark Mode</span>
+                <span class="hidden dark:inline">☀️ Light Mode</span>
+            </button>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">Sign Out</x-responsive-nav-link>

@@ -6,7 +6,7 @@
     <div class="py-8">
         <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="card p-8">
-                <form method="POST" action="{{ route('market-data.upload') }}" enctype="multipart/form-data" class="space-y-6">
+                <form method="POST" action="{{ route('market-data.upload') }}" enctype="multipart/form-data" class="space-y-6" x-data="formSubmit" @submit="submit">
                     @csrf
                     <div x-data="{ fileName: '' }" class="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-2xl p-10 text-center hover:border-primary-300 dark:hover:border-primary-600 transition-colors cursor-pointer" @click="$refs.fileInput.click()">
                         <svg class="w-10 h-10 text-slate-300 dark:text-slate-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
@@ -24,7 +24,11 @@
 
                     <div class="flex justify-end gap-3">
                         <a href="{{ route('market-data.index') }}" class="btn-secondary">Cancel</a>
-                        <button type="submit" class="btn-primary">Upload & Import</button>
+                        <button type="submit" class="btn-primary" :disabled="submitting" :class="{ 'opacity-75 cursor-wait': submitting }">
+                            <svg x-show="submitting" class="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+                            <span x-show="!submitting">Upload & Import</span>
+                            <span x-show="submitting" x-cloak>Uploading...</span>
+                        </button>
                     </div>
                 </form>
             </div>

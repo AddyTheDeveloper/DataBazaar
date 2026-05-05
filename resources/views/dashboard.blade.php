@@ -41,11 +41,30 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
                 <div class="lg:col-span-2 card p-6">
                     <h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4">Your Price Trends (30 Days)</h3>
+                    @if($priceTrends->isNotEmpty())
                     <div class="h-[240px]"><canvas id="userPriceTrend"></canvas></div>
+                    @else
+                    <div class="h-[240px] flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="w-10 h-10 text-slate-300 dark:text-slate-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                            <p class="text-sm text-slate-400 dark:text-slate-500">No price data yet</p>
+                            <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">Submit entries to see trends</p>
+                        </div>
+                    </div>
+                    @endif
                 </div>
                 <div class="card p-6">
                     <h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4">Category Breakdown</h3>
+                    @if($categoryBreakdown->isNotEmpty() && $categoryBreakdown->sum('market_data_count') > 0)
                     <div class="h-[240px]"><canvas id="userCategoryChart"></canvas></div>
+                    @else
+                    <div class="h-[240px] flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="w-10 h-10 text-slate-300 dark:text-slate-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+                            <p class="text-sm text-slate-400 dark:text-slate-500">No categories yet</p>
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </div>
 
@@ -102,6 +121,7 @@
         </div>
     </div>
 
+    @if($priceTrends->isNotEmpty() || ($categoryBreakdown->isNotEmpty() && $categoryBreakdown->sum('market_data_count') > 0))
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const isDark = document.documentElement.classList.contains('dark');
@@ -109,12 +129,15 @@
         Chart.defaults.font.family = 'Inter';
         Chart.defaults.color = isDark ? '#94a3b8' : '#64748b';
 
+        @if($priceTrends->isNotEmpty())
         new Chart(document.getElementById('userPriceTrend'), {
             type: 'line',
             data: { labels: {!! json_encode($priceTrends->pluck('trend_date')) !!}, datasets: [{ label: 'Avg Price', data: {!! json_encode($priceTrends->pluck('avg_price')) !!}, borderColor: '#2563eb', backgroundColor: isDark ? 'rgba(37,99,235,0.08)' : 'rgba(37,99,235,0.06)', fill: true, tension: 0.4, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5 }] },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: false, grid: { color: gridColor, drawBorder: false }, ticks: { callback: v=>'₹'+v, font: { size: 11 } }, border: { display: false } }, x: { grid: { display: false }, ticks: { maxTicksLimit: 8, font: { size: 11 } }, border: { display: false } } }, interaction: { intersect: false, mode: 'index' } }
         });
+        @endif
 
+        @if($categoryBreakdown->isNotEmpty() && $categoryBreakdown->sum('market_data_count') > 0)
         const catData = {!! json_encode($categoryBreakdown) !!};
         const colors = ['#2563eb','#10b981','#f59e0b','#ef4444','#8b5cf6','#ec4899','#14b8a6','#f97316','#6366f1','#84cc16'];
         new Chart(document.getElementById('userCategoryChart'), {
@@ -122,6 +145,8 @@
             data: { labels: catData.map(c=>c.name), datasets: [{ data: catData.map(c=>c.market_data_count), backgroundColor: colors, borderWidth: 0 }] },
             options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'bottom', labels: { boxWidth: 8, padding: 12, font: { size: 10 }, usePointStyle: true, pointStyle: 'circle' } } } }
         });
+        @endif
     });
     </script>
+    @endif
 </x-app-layout>

@@ -47,4 +47,17 @@ Alpine.data('toast', () => ({
     }
 }));
 
+// Form submit loading state component
+Alpine.data('formSubmit', () => ({
+    submitting: false,
+
+    submit(e) {
+        if (this.submitting) {
+            e.preventDefault();
+            return;
+        }
+        this.submitting = true;
+    }
+}));
+
 Alpine.start();

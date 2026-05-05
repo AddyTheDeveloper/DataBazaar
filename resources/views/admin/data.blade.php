@@ -5,13 +5,12 @@
     </x-slot>
     <div class="py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="card p-4 mb-6">
-                <form method="GET" action="{{ route('admin.data') }}" class="flex flex-wrap gap-3 items-end">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search..." class="form-input-custom text-sm w-44">
-                    <select name="status" class="form-input-custom text-sm w-36"><option value="">All Status</option><option value="pending" {{ request('status')=='pending'?'selected':'' }}>Pending</option><option value="approved" {{ request('status')=='approved'?'selected':'' }}>Approved</option><option value="rejected" {{ request('status')=='rejected'?'selected':'' }}>Rejected</option></select>
-                    <select name="category" class="form-input-custom text-sm w-40"><option value="">All Categories</option>@foreach($categories as $cat)<option value="{{ $cat->id }}" {{ request('category')==$cat->id?'selected':'' }}>{{ $cat->name }}</option>@endforeach</select>
-                    <button type="submit" class="btn-primary btn-sm">Filter</button>
-                    <a href="{{ route('admin.data') }}" class="btn-ghost btn-sm">Reset</a>
+            <div class="card p-5 mb-6">
+                <form method="GET" action="{{ route('admin.data') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 items-end">
+                    <div class="sm:col-span-2 lg:col-span-1"><input type="text" name="search" value="{{ request('search') }}" placeholder="Search..." class="form-input-custom text-sm"></div>
+                    <div><select name="status" class="form-input-custom text-sm"><option value="">All Status</option><option value="pending" {{ request('status')=='pending'?'selected':'' }}>Pending</option><option value="approved" {{ request('status')=='approved'?'selected':'' }}>Approved</option><option value="rejected" {{ request('status')=='rejected'?'selected':'' }}>Rejected</option></select></div>
+                    <div><select name="category" class="form-input-custom text-sm"><option value="">All Categories</option>@foreach($categories as $cat)<option value="{{ $cat->id }}" {{ request('category')==$cat->id?'selected':'' }}>{{ $cat->name }}</option>@endforeach</select></div>
+                    <div class="flex gap-2"><button type="submit" class="btn-primary btn-sm flex-1">Filter</button><a href="{{ route('admin.data') }}" class="btn-ghost btn-sm">Reset</a></div>
                 </form>
             </div>
             <div class="card overflow-hidden">

@@ -39,7 +39,10 @@ class MarketDataController extends Controller
         $categories = Category::orderBy('name')->get();
         $locations = MarketData::distinct()->pluck('location')->sort()->values();
 
-        return view('market-data.index', compact('data', 'categories', 'locations'));
+        // Pre-load user's bookmarked IDs to avoid N+1 queries in the view
+        $bookmarkedIds = auth()->user()->bookmarks()->pluck('market_data_id')->toArray();
+
+        return view('market-data.index', compact('data', 'categories', 'locations', 'bookmarkedIds'));
     }
 
     /**

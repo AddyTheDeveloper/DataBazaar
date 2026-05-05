@@ -6,7 +6,7 @@
 
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}" class="space-y-5">
+    <form method="POST" action="{{ route('login') }}" class="space-y-5" x-data="formSubmit" @submit="submit">
         @csrf
         <div>
             <label for="email" class="form-label">Email address</label>
@@ -30,7 +30,11 @@
             @endif
         </div>
 
-        <button type="submit" class="btn-primary w-full justify-center py-3">Sign In</button>
+        <button type="submit" class="btn-primary w-full justify-center py-3" :disabled="submitting" :class="{ 'opacity-75 cursor-wait': submitting }">
+            <svg x-show="submitting" class="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+            <span x-show="!submitting">Sign In</span>
+            <span x-show="submitting" x-cloak>Signing in...</span>
+        </button>
 
         <p class="text-center text-sm text-slate-500 dark:text-slate-400">
             Don't have an account?

@@ -12,29 +12,28 @@ window.Chart = Chart;
 // Alpine.js setup
 window.Alpine = Alpine;
 
-// Dark mode component
-Alpine.data('darkMode', () => ({
-    dark: localStorage.getItem('darkMode') === 'true' ||
-          (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches),
-
-    init() {
-        this.applyTheme();
-    },
+// Dark mode store
+Alpine.store('darkMode', {
+    on: localStorage.getItem('darkMode') === 'true' ||
+        (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches),
 
     toggle() {
-        this.dark = !this.dark;
-        localStorage.setItem('darkMode', this.dark);
+        this.on = !this.on;
+        localStorage.setItem('darkMode', this.on);
         this.applyTheme();
     },
 
     applyTheme() {
-        if (this.dark) {
+        if (this.on) {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
         }
     }
-}));
+});
+
+// Initialize theme
+Alpine.store('darkMode').applyTheme();
 
 // Toast notification component
 Alpine.data('toast', () => ({

@@ -1,6 +1,6 @@
 # DataBazaar — Market Intelligence & Databank Platform
 
-![DataBazaar Hero](file:///C:/Users/Aditya_hans/.gemini/antigravity/brain/dcbb576c-93a4-429a-963a-5221538b1bd7/databazaar_hero_banner_1777959246420.png)
+![DataBazaar Hero](public/images/hero-banner.png)
 
 ## 🌐 Overview
 **DataBazaar** is a premium, production-ready SaaS platform designed for the systematic collection, analysis, and sharing of market data. Built with a focus on high performance and minimalist aesthetics, it enables organizations and individual contributors to build comprehensive databanks of commodity prices, market trends, and regional insights across India.

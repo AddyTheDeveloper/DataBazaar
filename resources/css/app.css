@@ -157,6 +157,27 @@
         @apply border-b-0;
     }
 
+    /* Sticky Actions Column */
+    .data-table th:last-child,
+    .data-table td:last-child {
+        @apply sticky right-0 bg-white dark:bg-slate-800 z-10;
+        box-shadow: -10px 0 15px -10px rgba(0, 0, 0, 0.1);
+    }
+
+    .dark .data-table th:last-child,
+    .dark .data-table td:last-child {
+        @apply bg-slate-800;
+        box-shadow: -10px 0 15px -10px rgba(0, 0, 0, 0.4);
+    }
+
+    .data-table tbody tr:hover td:last-child {
+        @apply bg-slate-50;
+    }
+
+    .dark .data-table tbody tr:hover td:last-child {
+        @apply bg-slate-700/50;
+    }
+
     /* ── Page Layout ── */
     .page-header {
         @apply mb-10;

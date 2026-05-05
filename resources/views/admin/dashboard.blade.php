@@ -39,9 +39,25 @@
                 <div class="px-6 py-5 border-b border-slate-200/60 dark:border-slate-700/50"><h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300">Recent Activity</h3></div>
                 <div class="overflow-x-auto">
                     <table class="data-table">
-                        <thead><tr><th>Product</th><th>Price</th><th>Location</th><th>User</th><th>Status</th><th>When</th></tr></thead>
+                        <thead><tr><th>Product</th><th>Price</th><th>Location</th><th>Status</th><th>When</th><th class="text-right">Quick Actions</th></tr></thead>
                         <tbody>@foreach($recentEntries as $item)
-                            <tr><td class="font-medium text-slate-900 dark:text-white">{{ $item->product_name }}</td><td class="font-semibold text-primary-600 dark:text-primary-400 tabular-nums">₹{{ number_format($item->price, 2) }}</td><td>{{ $item->location }}</td><td class="text-xs text-slate-400">{{ $item->user->name }}</td><td><span class="badge badge-{{ $item->status }}">{{ ucfirst($item->status) }}</span></td><td class="text-xs text-slate-400">{{ $item->created_at->diffForHumans() }}</td></tr>
+                            <tr>
+                                <td class="font-medium text-slate-900 dark:text-white">{{ $item->product_name }}</td>
+                                <td class="font-semibold text-primary-600 dark:text-primary-400 tabular-nums">₹{{ number_format($item->price, 2) }}</td>
+                                <td>{{ $item->location }}</td>
+                                <td><span class="badge badge-{{ $item->status }}">{{ ucfirst($item->status) }}</span></td>
+                                <td class="text-xs text-slate-400">{{ $item->created_at->diffForHumans() }}</td>
+                                <td class="text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        @if($item->status === 'pending')
+                                            <form method="POST" action="{{ route('admin.data.approve', $item) }}">@csrf @method('PATCH')<button class="w-7 h-7 rounded-lg flex items-center justify-center text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 transition-colors" title="Approve"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></button></form>
+                                            <form method="POST" action="{{ route('admin.data.reject', $item) }}">@csrf @method('PATCH')<button class="w-7 h-7 rounded-lg flex items-center justify-center text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors" title="Reject"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></form>
+                                        @else
+                                            <span class="text-[10px] font-bold text-slate-300 dark:text-slate-600 uppercase tracking-tighter">Processed</span>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
                         @endforeach</tbody>
                     </table>
                 </div>

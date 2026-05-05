@@ -28,12 +28,22 @@
                                 <td class="tabular-nums">{{ $item->date->format('d M Y') }}</td>
                                 <td><span class="badge badge-{{ $item->status }}">{{ ucfirst($item->status) }}</span></td>
                                 <td class="text-right">
-                                    <div class="flex items-center justify-end gap-1.5">
+                                    <div class="flex items-center justify-end gap-2">
                                         @if($item->status !== 'approved')
-                                        <form method="POST" action="{{ route('admin.data.approve', $item) }}">@csrf @method('PATCH')<button class="btn-sm text-[11px] font-semibold text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 rounded-lg px-2.5 py-1 transition-colors">Approve</button></form>
+                                        <form method="POST" action="{{ route('admin.data.approve', $item) }}">@csrf @method('PATCH')
+                                            <button class="flex items-center gap-1.5 btn-sm font-semibold text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 rounded-lg px-3 py-1.5 transition-colors border border-emerald-600/20">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                                Approve
+                                            </button>
+                                        </form>
                                         @endif
                                         @if($item->status !== 'rejected')
-                                        <form method="POST" action="{{ route('admin.data.reject', $item) }}">@csrf @method('PATCH')<button class="btn-sm text-[11px] font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg px-2.5 py-1 transition-colors">Reject</button></form>
+                                        <form method="POST" action="{{ route('admin.data.reject', $item) }}">@csrf @method('PATCH')
+                                            <button class="flex items-center gap-1.5 btn-sm font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg px-3 py-1.5 transition-colors border border-red-600/20">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                                                Reject
+                                            </button>
+                                        </form>
                                         @endif
                                     </div>
                                 </td>

@@ -23,12 +23,12 @@
                 <div class="absolute bottom-1/4 right-1/4 w-56 h-56 bg-accent-500/15 rounded-full blur-3xl animate-pulse-soft" style="animation-delay: 1.5s"></div>
 
                 <div class="relative z-10 flex flex-col justify-center px-12 xl:px-20">
-                    <div class="flex items-center gap-3 mb-8">
-                        <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center">
+                    <a href="{{ route('home') }}" class="flex items-center gap-3 mb-8 group">
+                        <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                         </div>
-                        <span class="text-xl font-bold text-white">DataBazaar</span>
-                    </div>
+                        <span class="text-xl font-bold text-white tracking-tight">DataBazaar</span>
+                    </a>
 
                     <h1 class="text-4xl xl:text-5xl font-bold text-white leading-tight mb-6">
                         Market intelligence,<br>
@@ -57,12 +57,12 @@
 
             {{-- Right Panel: Form --}}
             <div class="flex-1 flex flex-col items-center justify-center px-6 py-12">
-                <div class="lg:hidden flex items-center gap-2.5 mb-10">
-                    <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center">
+                <a href="{{ route('home') }}" class="lg:hidden flex items-center gap-2.5 mb-10 group">
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center group-hover:scale-105 transition-transform">
                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                     </div>
-                    <span class="text-lg font-bold text-slate-900 dark:text-white">DataBazaar</span>
-                </div>
+                    <span class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">DataBazaar</span>
+                </a>
 
                 <div class="w-full max-w-[400px]">
                     @if(session('error'))

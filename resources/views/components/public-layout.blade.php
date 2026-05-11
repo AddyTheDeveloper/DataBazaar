@@ -63,12 +63,12 @@
                 <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
                         <div class="md:col-span-2">
-                            <div class="flex items-center gap-2.5 mb-4">
-                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center">
-                                    <svg class="w-4.5 h-4.5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                                </div>
-                                <span class="text-lg font-bold text-slate-900 dark:text-white">DataBazaar</span>
-                            </div>
+                            <a href="{{ route('home') }}" class="flex items-center gap-2.5 mb-4 group">
+                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center group-hover:scale-105 transition-transform">
+                                     <svg class="w-4.5 h-4.5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                 </div>
+                                 <span class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">DataBazaar</span>
+                            </a>
                             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">Open market intelligence platform. Submit, explore, and analyze price data across India.</p>
                         </div>
                         <div>

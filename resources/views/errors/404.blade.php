@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" x-data="{ dark: localStorage.getItem('darkMode') === 'true' }" :class="{ 'dark': dark }">
+<html lang="en" x-data :class="{ 'dark': $store.darkMode.on }">
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <title>404 — DataBazaar</title>

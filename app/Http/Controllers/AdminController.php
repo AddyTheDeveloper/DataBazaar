@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -15,31 +16,49 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
-        $totalUsers = User::where('role', 'user')->count();
-        $totalEntries = MarketData::count();
-        $pendingEntries = MarketData::pending()->count();
-        $approvedEntries = MarketData::approved()->count();
-        $avgPrice = MarketData::approved()->avg('price');
+        $totalUsers = (float)(string)User::where('role', 'user')->count();
+        $totalEntries = (float)(string)MarketData::count();
+        $pendingEntries = (float)(string)MarketData::pending()->count();
+        $approvedEntries = (float)(string)MarketData::approved()->count();
+        $avgPrice = (float)(string)MarketData::approved()->avg('price');
 
         // Submissions over time (last 30 days)
         $submissionTrends = MarketData::where('created_at', '>=', now()->subDays(30))
-            ->select(DB::raw('DATE(created_at) as trend_date'), DB::raw('COUNT(*) as count'))
-            ->groupBy('trend_date')
-            ->orderBy('trend_date')
-            ->get();
+            ->get()
+            ->groupBy(function($item) {
+                return Carbon::parse($item->created_at)->format('Y-m-d');
+            })
+            ->map(function($group, $date) {
+                return (object)[
+                    'trend_date' => $date,
+                    'count' => (float)(string)$group->count()
+                ];
+            })
+            ->sortBy('trend_date')
+            ->values();
 
         // Top products by submission count
         $topProducts = MarketData::approved()
-            ->select('product_name', DB::raw('COUNT(*) as count'), DB::raw('AVG(price) as avg_price'))
+            ->get()
             ->groupBy('product_name')
-            ->orderByDesc('count')
+            ->map(function($group, $name) {
+                return (object)[
+                    'product_name' => $name,
+                    'count' => (float)(string)$group->count(),
+                    'avg_price' => (float)(string)$group->avg('price')
+                ];
+            })
+            ->sortByDesc('count')
             ->take(10)
-            ->get();
+            ->values();
 
-        // Category distribution
-        $categoryStats = Category::withCount(['marketData' => function ($q) {
-            $q->where('status', 'approved');
-        }])->get();
+        // Category distribution (Manual count for MongoDB compatibility)
+        $categoryStats = Category::all()->map(function ($category) {
+            $category->market_data_count = (float)(string)MarketData::approved()
+                ->where('category_id', $category->id)
+                ->count();
+            return $category;
+        });
 
         // Recent activity
         $recentEntries = MarketData::with(['user', 'category'])
@@ -95,7 +114,7 @@ class AdminController extends Controller
      */
     public function manageUsers(Request $request)
     {
-        $query = User::withCount('marketData');
+        $query = User::query();
 
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
@@ -105,6 +124,11 @@ class AdminController extends Controller
         }
 
         $users = $query->orderBy('created_at', 'desc')->paginate(20)->withQueryString();
+        
+        // Manual count for the current page of users
+        foreach ($users as $user) {
+            $user->market_data_count = (float)(string)MarketData::where('user_id', $user->id)->count();
+        }
 
         return view('admin.users', compact('users'));
     }

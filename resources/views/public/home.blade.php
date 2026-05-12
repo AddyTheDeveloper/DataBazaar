@@ -12,7 +12,7 @@
             <div class="max-w-3xl mx-auto text-center">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-50 dark:bg-primary-500/10 border border-primary-200/60 dark:border-primary-500/20 mb-8 animate-fade-in">
                     <div class="w-1.5 h-1.5 rounded-full bg-accent-500 animate-pulse-soft"></div>
-                    <span class="text-xs font-semibold text-primary-700 dark:text-primary-400 tracking-wide">{{ number_format($totalEntries) }} data entries and growing</span>
+                    <span class="text-xs font-semibold text-primary-700 dark:text-primary-400 tracking-wide">{{ number_format((float)$totalEntries) }} data entries and growing</span>
                 </div>
 
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] animate-slide-up">
@@ -43,10 +43,10 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 stagger-children">
             @php
                 $stats = [
-                    ['value' => number_format($totalEntries), 'label' => 'Data Entries', 'color' => 'primary'],
-                    ['value' => number_format($totalProducts), 'label' => 'Products Tracked', 'color' => 'accent'],
-                    ['value' => number_format($totalLocations), 'label' => 'Locations', 'color' => 'violet'],
-                    ['value' => '₹'.number_format($avgPrice ?? 0, 0), 'label' => 'Avg Price', 'color' => 'amber'],
+                    ['value' => number_format((float)$totalEntries), 'label' => 'Data Entries', 'color' => 'primary'],
+                    ['value' => number_format((float)$totalProducts), 'label' => 'Products Tracked', 'color' => 'accent'],
+                    ['value' => number_format((float)$totalLocations), 'label' => 'Locations', 'color' => 'violet'],
+                    ['value' => '₹'.number_format((float)($avgPrice ?? 0), 0), 'label' => 'Avg Price', 'color' => 'amber'],
                 ];
             @endphp
             @foreach($stats as $stat)
@@ -93,7 +93,7 @@
                             <h3 class="font-semibold text-slate-900 dark:text-white truncate group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ $item->product_name }}</h3>
                             <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{{ $item->category->name }}</p>
                         </div>
-                        <span class="text-lg font-bold text-primary-600 dark:text-primary-400 whitespace-nowrap">₹{{ number_format($item->price, 2) }}</span>
+                        <span class="text-lg font-bold text-primary-600 dark:text-primary-400 whitespace-nowrap">₹{{ number_format((float)$item->price, 2) }}</span>
                     </div>
                     <div class="flex items-center justify-between mt-5 pt-4 border-t border-slate-100 dark:border-slate-700/50">
                         <div class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">

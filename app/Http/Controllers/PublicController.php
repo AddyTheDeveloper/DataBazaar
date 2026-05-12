@@ -6,6 +6,7 @@ use App\Models\MarketData;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class PublicController extends Controller
 {
@@ -14,10 +15,10 @@ class PublicController extends Controller
      */
     public function home()
     {
-        $totalProducts = MarketData::approved()->distinct('product_name')->count('product_name');
-        $totalLocations = MarketData::approved()->distinct('location')->count('location');
-        $totalEntries = MarketData::approved()->count();
-        $avgPrice = MarketData::approved()->avg('price');
+        $totalProducts = (float)(string)MarketData::approved()->distinct('product_name')->count('product_name');
+        $totalLocations = (float)(string)MarketData::approved()->distinct('location')->count('location');
+        $totalEntries = (float)(string)MarketData::approved()->count();
+        $avgPrice = (float)(string)MarketData::approved()->avg('price');
 
         $recentData = MarketData::approved()
             ->with(['category', 'user'])
@@ -25,18 +26,29 @@ class PublicController extends Controller
             ->take(6)
             ->get();
 
-        // Price trends for chart (last 30 days, grouped by date)
+        // Price trends for chart (last 30 days)
         $priceTrends = MarketData::approved()
             ->where('date', '>=', now()->subDays(30))
-            ->select(DB::raw('DATE(date) as trend_date'), DB::raw('AVG(price) as avg_price'))
-            ->groupBy('trend_date')
-            ->orderBy('trend_date')
-            ->get();
+            ->orderBy('date')
+            ->get()
+            ->groupBy(function($item) {
+                return Carbon::parse($item->date)->format('Y-m-d');
+            })
+            ->map(function($group, $date) {
+                return (object)[
+                    'trend_date' => $date,
+                    'avg_price' => (float)(string)$group->avg('price')
+                ];
+            })
+            ->values();
 
-        // Category distribution
-        $categoryStats = Category::withCount(['marketData' => function ($q) {
-            $q->where('status', 'approved');
-        }])->get();
+        // Category distribution (Manual count for MongoDB compatibility)
+        $categoryStats = Category::all()->map(function ($category) {
+            $category->market_data_count = (float)(string)MarketData::approved()
+                ->where('category_id', $category->id)
+                ->count();
+            return $category;
+        });
 
         return view('public.home', compact(
             'totalProducts', 'totalLocations', 'totalEntries', 'avgPrice',

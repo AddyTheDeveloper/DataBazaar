@@ -18,10 +18,10 @@
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 stagger-children">
                 @php
                     $dashStats = [
-                        ['value' => $totalEntries, 'label' => 'Total Entries', 'icon' => 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', 'bg' => 'bg-primary-50 dark:bg-primary-500/10', 'text' => 'text-primary-600 dark:text-primary-400'],
-                        ['value' => $approvedEntries, 'label' => 'Approved', 'icon' => 'M5 13l4 4L19 7', 'bg' => 'bg-emerald-50 dark:bg-emerald-500/10', 'text' => 'text-emerald-600 dark:text-emerald-400'],
-                        ['value' => $pendingEntries, 'label' => 'Pending', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'bg' => 'bg-amber-50 dark:bg-amber-500/10', 'text' => 'text-amber-600 dark:text-amber-400'],
-                        ['value' => '₹'.number_format($avgPrice ?? 0, 0), 'label' => 'Avg Price', 'icon' => 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6', 'bg' => 'bg-violet-50 dark:bg-violet-500/10', 'text' => 'text-violet-600 dark:text-violet-400'],
+                        ['value' => number_format((float)$totalEntries), 'label' => 'Total Entries', 'icon' => 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', 'bg' => 'bg-primary-50 dark:bg-primary-500/10', 'text' => 'text-primary-600 dark:text-primary-400'],
+                        ['value' => number_format((float)$approvedEntries), 'label' => 'Approved', 'icon' => 'M5 13l4 4L19 7', 'bg' => 'bg-emerald-50 dark:bg-emerald-500/10', 'text' => 'text-emerald-600 dark:text-emerald-400'],
+                        ['value' => number_format((float)$pendingEntries), 'label' => 'Pending', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'bg' => 'bg-amber-50 dark:bg-amber-500/10', 'text' => 'text-amber-600 dark:text-amber-400'],
+                        ['value' => '₹'.number_format((float)($avgPrice ?? 0), 0), 'label' => 'Avg Price', 'icon' => 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6', 'bg' => 'bg-violet-50 dark:bg-violet-500/10', 'text' => 'text-violet-600 dark:text-violet-400'],
                     ];
                 @endphp
                 @foreach($dashStats as $s)
@@ -83,7 +83,7 @@
                             @forelse($recentData as $item)
                             <tr>
                                 <td class="font-medium text-slate-900 dark:text-white">{{ $item->product_name }}</td>
-                                <td class="font-semibold text-primary-600 dark:text-primary-400">₹{{ number_format($item->price, 2) }}</td>
+                                <td class="font-semibold text-primary-600 dark:text-primary-400">₹{{ number_format((float)$item->price, 2) }}</td>
                                 <td><span class="badge badge-approved">{{ $item->category->name }}</span></td>
                                 <td><span class="badge badge-{{ $item->status }}">{{ ucfirst($item->status) }}</span></td>
                                 <td class="text-slate-500">{{ $item->date->format('d M Y') }}</td>

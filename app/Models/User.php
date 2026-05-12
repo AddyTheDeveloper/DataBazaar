@@ -57,7 +57,7 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return ($this->role ?? 'user') === 'admin';
     }
 
     /**
@@ -65,7 +65,7 @@ class User extends Authenticatable
      */
     public function isBlocked(): bool
     {
-        return $this->is_blocked;
+        return (bool) ($this->is_blocked ?? false);
     }
 
     /**

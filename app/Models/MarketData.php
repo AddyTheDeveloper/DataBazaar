@@ -3,16 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Builder;
+use MongoDB\Laravel\Eloquent\Model;
+use MongoDB\Laravel\Relations\BelongsTo;
+use MongoDB\Laravel\Relations\HasMany;
+use MongoDB\Laravel\Eloquent\Builder;
 
 class MarketData extends Model
 {
     use HasFactory;
 
-    protected $table = 'market_data';
+    protected $connection = 'mongodb';
+    protected $collection = 'market_data';
 
     protected $fillable = [
         'user_id',

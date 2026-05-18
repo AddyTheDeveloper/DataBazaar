@@ -273,7 +273,7 @@
                 {{-- Products Catalog Card --}}
                 <div class="glass-card p-8">
                     <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-                        <svg class="w-5.5 h-5.5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                        <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                         Approved Market Database Catalog
                     </h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Select an active commodity or commodity subset below to explore real-time price dispersion:</p>

@@ -69,7 +69,7 @@ class PublicController extends Controller
         $data = $query->paginate(15)->withQueryString();
 
         $categories = Category::orderBy('name')->get();
-        $locations = MarketData::approved()->distinct()->pluck('location')->sort()->values();
+        $locations = collect(MarketData::raw()->distinct('location', ['status' => 'approved']))->sort()->values();
 
         return view('public.explore', compact('data', 'categories', 'locations'));
     }

@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="sticky top-0 z-50 border-b border-slate-200/60 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl backdrop-saturate-150">
+<nav x-data="{ open: false }" class="sticky top-0 z-50 border-b border-white/50 dark:border-white/10 bg-white/70 dark:bg-slate-950/70 backdrop-blur-2xl backdrop-saturate-150 shadow-sm shadow-slate-900/[0.03]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
 
@@ -16,6 +16,7 @@
                         $navItems = [
                             ['route' => 'dashboard', 'label' => 'Dashboard', 'match' => 'dashboard'],
                             ['route' => 'market-data.index', 'label' => 'Explore', 'match' => 'market-data.*'],
+                            ['route' => 'public.intelligence', 'label' => 'Intelligence', 'match' => 'public.intelligence*'],
                             ['route' => 'market-data.create', 'label' => 'Submit', 'match' => 'market-data.create'],
                             ['route' => 'bookmarks.index', 'label' => 'Bookmarks', 'match' => 'bookmarks.*'],
                         ];
@@ -94,6 +95,7 @@
         <div class="px-4 py-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">Dashboard</x-responsive-nav-link>
             <x-responsive-nav-link :href="route('market-data.index')" :active="request()->routeIs('market-data.*')">Explore</x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('public.intelligence')" :active="request()->routeIs('public.intelligence')">Intelligence</x-responsive-nav-link>
             <x-responsive-nav-link :href="route('market-data.create')">Submit</x-responsive-nav-link>
             <x-responsive-nav-link :href="route('bookmarks.index')">Bookmarks</x-responsive-nav-link>
             @if(auth()->user()->isAdmin())

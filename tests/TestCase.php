@@ -2,9 +2,21 @@
 
 namespace Tests;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    //
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        if (app()->environment('testing') && config('database.default') === 'mongodb') {
+            $databaseName = config('database.connections.mongodb.database');
+
+            if ($databaseName === 'databazaar_test') {
+                DB::connection('mongodb')->getMongoDB()->drop();
+            }
+        }
+    }
 }

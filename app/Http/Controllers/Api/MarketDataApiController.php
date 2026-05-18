@@ -67,11 +67,7 @@ class MarketDataApiController extends Controller
      */
     public function products(): JsonResponse
     {
-        $products = MarketData::approved()
-            ->select('product_name')
-            ->distinct()
-            ->orderBy('product_name')
-            ->pluck('product_name');
+        $products = collect(MarketData::raw()->distinct('product_name', ['status' => 'approved']))->sort()->values();
 
         return response()->json([
             'success' => true,

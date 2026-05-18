@@ -16,7 +16,7 @@
         <div class="min-h-screen flex flex-col transition-colors duration-300">
 
             {{-- Navbar --}}
-            <nav x-data="{ mobileOpen: false }" class="sticky top-0 z-50 border-b border-slate-200/60 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl backdrop-saturate-150">
+            <nav x-data="{ mobileOpen: false }" class="sticky top-0 z-50 border-b border-white/40 dark:border-white/10 bg-white/70 dark:bg-slate-950/70 backdrop-blur-2xl backdrop-saturate-150 shadow-sm shadow-slate-900/[0.03]">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex items-center justify-between h-16">
                         <div class="flex items-center gap-8">
@@ -29,6 +29,7 @@
                             <div class="hidden sm:flex items-center gap-1">
                                 <a href="{{ route('home') }}" class="px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 {{ request()->routeIs('home') ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-500/10' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800' }}">Home</a>
                                 <a href="{{ route('public.explore') }}" class="px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 {{ request()->routeIs('public.explore') ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-500/10' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800' }}">Explore</a>
+                                <a href="{{ route('public.intelligence') }}" class="px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 {{ request()->routeIs('public.intelligence') ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-500/10' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800' }}">Intelligence</a>
                             </div>
                         </div>
                         <div class="hidden sm:flex items-center gap-3">
@@ -52,6 +53,7 @@
                 <div :class="{'block': mobileOpen, 'hidden': !mobileOpen}" class="hidden sm:hidden border-t border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3 space-y-1">
                     <a href="{{ route('home') }}" class="block px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Home</a>
                     <a href="{{ route('public.explore') }}" class="block px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Explore</a>
+                    <a href="{{ route('public.intelligence') }}" class="block px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Intelligence</a>
                     @guest<a href="{{ route('login') }}" class="block px-3 py-2 text-sm font-medium text-primary-600 rounded-lg hover:bg-primary-50">Sign In</a>@endguest
                 </div>
             </nav>
@@ -76,6 +78,7 @@
                             <ul class="space-y-2.5">
                                 <li><a href="{{ route('home') }}" class="text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Home</a></li>
                                 <li><a href="{{ route('public.explore') }}" class="text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Explore Data</a></li>
+                                <li><a href="{{ route('public.intelligence') }}" class="text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Market Intelligence</a></li>
                                 <li><a href="{{ route('register') }}" class="text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Create Account</a></li>
                             </ul>
                         </div>

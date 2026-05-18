@@ -1,138 +1,156 @@
 <x-public-layout>
-    <x-slot name="title">Market Databank Platform</x-slot>
+    <x-slot name="title">Market Intelligence Platform</x-slot>
 
-    {{-- Hero --}}
-    <section class="relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-primary-50/50 via-white to-white dark:from-primary-950/30 dark:via-slate-950 dark:to-slate-950"></div>
-        <div class="absolute inset-0 bg-grid opacity-40 dark:opacity-20"></div>
-        <div class="absolute top-20 left-1/4 w-96 h-96 bg-primary-400/10 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-10 right-1/4 w-80 h-80 bg-accent-400/8 rounded-full blur-3xl"></div>
+    <section class="relative isolate overflow-hidden border-b border-white/60 dark:border-white/10">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.16),transparent_32%),linear-gradient(180deg,#f8fafc_0%,#eef6ff_48%,#ffffff_100%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.22),transparent_32%),linear-gradient(180deg,#020617_0%,#0f172a_52%,#020617_100%)]"></div>
+        <div class="absolute inset-0 bg-grid opacity-35 dark:opacity-15"></div>
 
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 lg:pt-28 lg:pb-32">
-            <div class="max-w-3xl mx-auto text-center">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-50 dark:bg-primary-500/10 border border-primary-200/60 dark:border-primary-500/20 mb-8 animate-fade-in">
-                    <div class="w-1.5 h-1.5 rounded-full bg-accent-500 animate-pulse-soft"></div>
-                    <span class="text-xs font-semibold text-primary-700 dark:text-primary-400 tracking-wide">{{ number_format((float)$totalEntries) }} data entries and growing</span>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-14 lg:pt-20 lg:pb-18">
+            <div class="grid lg:grid-cols-[0.94fr_1.06fr] gap-10 lg:gap-14 items-center">
+                <div class="max-w-2xl">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-card mb-6">
+                        <span class="h-2 w-2 rounded-full bg-accent-500"></span>
+                        <span class="text-xs font-semibold text-slate-700 dark:text-slate-200">{{ number_format((float) $totalEntries) }} verified market observations</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 dark:text-white leading-[1.05]">
+                        Market data that feels ready for decisions.
+                    </h1>
+
+                    <p class="mt-6 text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-8 max-w-xl">
+                        DataBazaar helps teams collect, review, explore, and export price intelligence with a calm workflow and clear analytics.
+                    </p>
+
+                    <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                        <a href="{{ route('public.explore') }}" class="btn-primary btn-lg">
+                            Explore Data
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                        <a href="{{ route('register') }}" class="btn-secondary btn-lg">Start Contributing</a>
+                    </div>
+
+                    <div class="mt-10 grid grid-cols-3 gap-3 max-w-lg">
+                        <div class="glass-card p-4">
+                            <p class="text-2xl font-bold text-slate-950 dark:text-white">{{ number_format((float) $totalProducts) }}</p>
+                            <p class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">Products</p>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="text-2xl font-bold text-slate-950 dark:text-white">{{ number_format((float) $totalLocations) }}</p>
+                            <p class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">Locations</p>
+                        </div>
+                        <div class="glass-card p-4">
+                            <p class="text-2xl font-bold text-slate-950 dark:text-white">&#8377;{{ number_format((float) ($avgPrice ?? 0), 0) }}</p>
+                            <p class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">Avg Price</p>
+                        </div>
+                    </div>
                 </div>
 
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] animate-slide-up">
-                    Market intelligence,
-                    <span class="gradient-text">made simple.</span>
-                </h1>
-
-                <p class="mt-6 text-lg sm:text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto animate-slide-up" style="animation-delay: 0.1s">
-                    Submit, explore, and analyze market pricing data from across the country. Real-time trends, exportable reports, and community-driven insights.
-                </p>
-
-                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up" style="animation-delay: 0.2s">
-                    <a href="{{ route('public.explore') }}" class="btn-primary btn-lg w-full sm:w-auto">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                        Explore Data
-                    </a>
-                    <a href="{{ route('register') }}" class="btn-secondary btn-lg w-full sm:w-auto">
-                        Start Contributing
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                    </a>
+                <div class="relative">
+                    <div class="glass-card overflow-hidden p-3">
+                        <img src="{{ asset('images/hero-banner.png') }}" alt="DataBazaar analytics preview" class="aspect-[16/11] w-full rounded-lg object-cover">
+                    </div>
+                    <div class="absolute -bottom-5 left-5 right-5 glass-card p-4 hidden sm:block">
+                        <div class="flex items-center justify-between gap-4">
+                            <div>
+                                <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Latest signal</p>
+                                <p class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">
+                                    @if($recentData->isNotEmpty())
+                                        {{ $recentData->first()->product_name }} in {{ $recentData->first()->location }}
+                                    @else
+                                        Waiting for first approved submission
+                                    @endif
+                                </p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Current price</p>
+                                <p class="mt-1 text-lg font-bold text-primary-600 dark:text-primary-300">
+                                    @if($recentData->isNotEmpty())
+                                        &#8377;{{ number_format((float) $recentData->first()->price, 2) }}
+                                    @else
+                                        --
+                                    @endif
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    {{-- Stats --}}
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 stagger-children">
-            @php
-                $stats = [
-                    ['value' => number_format((float)$totalEntries), 'label' => 'Data Entries', 'color' => 'primary'],
-                    ['value' => number_format((float)$totalProducts), 'label' => 'Products Tracked', 'color' => 'accent'],
-                    ['value' => number_format((float)$totalLocations), 'label' => 'Locations', 'color' => 'violet'],
-                    ['value' => '₹'.number_format((float)($avgPrice ?? 0), 0), 'label' => 'Avg Price', 'color' => 'amber'],
-                ];
-            @endphp
-            @foreach($stats as $stat)
-                <div class="card p-6 text-center">
-                    <p class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">{{ $stat['value'] }}</p>
-                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1.5 uppercase tracking-wider">{{ $stat['label'] }}</p>
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid lg:grid-cols-3 gap-5">
+            @foreach([
+                ['title' => 'Collect clean data', 'body' => 'Guided submissions, CSV import, status review, and validations keep contributions consistent.'],
+                ['title' => 'Understand movement', 'body' => 'Trend charts, category distribution, comparisons, and filters turn raw prices into useful signals.'],
+                ['title' => 'Share and export', 'body' => 'Export CSV or JSON, bookmark useful rows, and generate share links for specific observations.'],
+            ] as $feature)
+                <div class="glass-card p-6">
+                    <h3 class="text-base font-semibold text-slate-950 dark:text-white">{{ $feature['title'] }}</h3>
+                    <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">{{ $feature['body'] }}</p>
                 </div>
             @endforeach
         </div>
     </section>
 
-    {{-- Charts --}}
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
-        <div class="text-center mb-12">
-            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Market Trends</h2>
-            <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">Real-time price movements across the platform</p>
-        </div>
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="card p-6">
-                <h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4">Price Trends (30 Days)</h3>
+                <div class="flex items-center justify-between mb-5">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-950 dark:text-white">Price Trends</h2>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Average approved prices over the last 30 days</p>
+                    </div>
+                </div>
                 <div class="h-[280px]"><canvas id="priceTrendsChart"></canvas></div>
             </div>
+
             <div class="card p-6">
-                <h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4">Category Distribution</h3>
+                <div class="flex items-center justify-between mb-5">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-950 dark:text-white">Category Mix</h2>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Approved entries by category</p>
+                    </div>
+                </div>
                 <div class="h-[280px]"><canvas id="categoryChart"></canvas></div>
             </div>
         </div>
     </section>
 
-    {{-- Recent Data --}}
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
-        <div class="flex items-end justify-between mb-8">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
             <div>
-                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Latest Submissions</h2>
-                <p class="text-slate-500 dark:text-slate-400 mt-1 text-sm">Recently approved market data</p>
+                <h2 class="text-2xl font-bold text-slate-950 dark:text-white tracking-tight">Latest Approved Data</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Fresh market observations from contributors</p>
             </div>
-            <a href="{{ route('public.explore') }}" class="btn-secondary btn-sm hidden sm:inline-flex">View All</a>
+            <a href="{{ route('public.explore') }}" class="btn-secondary btn-sm">View All</a>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             @forelse($recentData as $item)
-                <div class="card-hover p-6 group">
+                <div class="card-hover p-5">
                     <div class="flex items-start justify-between gap-4">
                         <div class="min-w-0">
-                            <h3 class="font-semibold text-slate-900 dark:text-white truncate group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ $item->product_name }}</h3>
+                            <h3 class="font-semibold text-slate-950 dark:text-white truncate">{{ $item->product_name }}</h3>
                             <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{{ $item->category->name }}</p>
                         </div>
-                        <span class="text-lg font-bold text-primary-600 dark:text-primary-400 whitespace-nowrap">₹{{ number_format((float)$item->price, 2) }}</span>
+                        <span class="text-lg font-bold text-primary-600 dark:text-primary-300 whitespace-nowrap">&#8377;{{ number_format((float) $item->price, 2) }}</span>
                     </div>
-                    <div class="flex items-center justify-between mt-5 pt-4 border-t border-slate-100 dark:border-slate-700/50">
-                        <div class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-                            {{ $item->location }}
-                        </div>
-                        <span class="text-xs text-slate-400 dark:text-slate-500">{{ $item->date->format('d M Y') }}</span>
+                    <div class="mt-5 pt-4 border-t border-slate-200/70 dark:border-white/10 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                        <span>{{ $item->location }}</span>
+                        <span>{{ $item->date->format('d M Y') }}</span>
                     </div>
                 </div>
             @empty
-                <div class="col-span-3 card p-12 text-center">
-                    <p class="text-slate-400 dark:text-slate-500">No data available yet. Be the first to contribute!</p>
-                </div>
+                <div class="lg:col-span-3 card p-10 text-center text-sm text-slate-500 dark:text-slate-400">No approved data yet. Create an account to submit the first entry.</div>
             @endforelse
-        </div>
-    </section>
-
-    {{-- CTA --}}
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
-        <div class="relative overflow-hidden rounded-3xl bg-slate-900 dark:bg-slate-800 p-12 sm:p-16">
-            <div class="absolute inset-0 bg-gradient-to-br from-primary-600/20 via-transparent to-accent-500/10"></div>
-            <div class="absolute top-0 right-0 w-80 h-80 bg-primary-500/10 rounded-full blur-3xl"></div>
-            <div class="absolute inset-0 bg-grid opacity-5"></div>
-
-            <div class="relative text-center max-w-xl mx-auto">
-                <h2 class="text-3xl font-bold text-white tracking-tight">Ready to share market insights?</h2>
-                <p class="text-slate-400 mt-4 leading-relaxed">Join our growing community of contributors building the most comprehensive market database.</p>
-                <a href="{{ route('register') }}" class="btn-primary btn-lg mt-8 inline-flex">
-                    Create Free Account
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                </a>
-            </div>
         </div>
     </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const isDark = document.documentElement.classList.contains('dark');
-            const gridColor = isDark ? 'rgba(148,163,184,0.06)' : 'rgba(0,0,0,0.04)';
+            const gridColor = isDark ? 'rgba(148,163,184,0.08)' : 'rgba(15,23,42,0.06)';
             const textColor = isDark ? '#94a3b8' : '#64748b';
 
             Chart.defaults.font.family = 'Inter';
@@ -143,20 +161,23 @@
                 data: {
                     labels: {!! json_encode($priceTrends->pluck('trend_date')) !!},
                     datasets: [{
-                        label: 'Avg Price (₹)',
+                        label: 'Avg Price',
                         data: {!! json_encode($priceTrends->pluck('avg_price')) !!},
                         borderColor: '#2563eb',
-                        backgroundColor: isDark ? 'rgba(37,99,235,0.08)' : 'rgba(37,99,235,0.06)',
-                        fill: true, tension: 0.4, borderWidth: 2,
-                        pointBackgroundColor: '#2563eb', pointBorderColor: isDark ? '#1e293b' : '#fff',
-                        pointBorderWidth: 2, pointRadius: 0, pointHoverRadius: 5,
+                        backgroundColor: isDark ? 'rgba(37,99,235,0.12)' : 'rgba(37,99,235,0.08)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        pointHoverRadius: 5,
                     }]
                 },
                 options: {
-                    responsive: true, maintainAspectRatio: false,
+                    responsive: true,
+                    maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        y: { beginAtZero: false, grid: { color: gridColor, drawBorder: false }, ticks: { callback: v => '₹'+v, font: { size: 11 } }, border: { display: false } },
+                        y: { beginAtZero: false, grid: { color: gridColor }, ticks: { callback: value => 'Rs ' + value, font: { size: 11 } }, border: { display: false } },
                         x: { grid: { display: false }, ticks: { maxTicksLimit: 8, font: { size: 11 } }, border: { display: false } }
                     },
                     interaction: { intersect: false, mode: 'index' },
@@ -164,15 +185,21 @@
             });
 
             const catData = {!! json_encode($categoryStats) !!};
-            const colors = ['#2563eb','#10b981','#f59e0b','#ef4444','#8b5cf6','#ec4899','#14b8a6','#f97316','#6366f1','#84cc16'];
             new Chart(document.getElementById('categoryChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: catData.map(c => c.name),
-                    datasets: [{ data: catData.map(c => c.market_data_count), backgroundColor: colors, borderWidth: 0, hoverOffset: 6 }]
+                    labels: catData.map(category => category.name),
+                    datasets: [{
+                        data: catData.map(category => category.market_data_count),
+                        backgroundColor: ['#2563eb','#10b981','#f59e0b','#ef4444','#8b5cf6','#ec4899','#14b8a6','#f97316','#6366f1','#84cc16'],
+                        borderWidth: 0,
+                        hoverOffset: 6
+                    }]
                 },
                 options: {
-                    responsive: true, maintainAspectRatio: false, cutout: '70%',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '68%',
                     plugins: { legend: { position: 'right', labels: { boxWidth: 10, padding: 14, font: { size: 11 }, usePointStyle: true, pointStyle: 'circle' } } }
                 }
             });

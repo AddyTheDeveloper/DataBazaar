@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PublicController::class, 'home'])->name('home');
 Route::get('/explore', [PublicController::class, 'explore'])->name('public.explore');
 Route::get('/shared/{token}', [MarketDataController::class, 'publicView'])->name('shared.view');
+Route::get('/intelligence', [App\Http\Controllers\IntelligenceController::class, 'index'])->name('public.intelligence');
+Route::get('/api/intelligence/suggestions', [App\Http\Controllers\IntelligenceController::class, 'suggestions'])->name('api.intelligence.suggestions');
 
 /*
 |--------------------------------------------------------------------------

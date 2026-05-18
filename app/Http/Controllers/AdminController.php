@@ -23,19 +23,22 @@ class AdminController extends Controller
         $avgPrice = (float)(string)MarketData::approved()->avg('price');
 
         // Submissions over time (last 30 days)
-        $submissionTrends = MarketData::where('created_at', '>=', now()->subDays(30))
+        $rawTrends = MarketData::where('created_at', '>=', now()->subDays(30))
             ->get()
             ->groupBy(function($item) {
                 return Carbon::parse($item->created_at)->format('Y-m-d');
-            })
-            ->map(function($group, $date) {
-                return (object)[
-                    'trend_date' => $date,
-                    'count' => (float)(string)$group->count()
-                ];
-            })
-            ->sortBy('trend_date')
-            ->values();
+            });
+
+        $submissionTrends = collect();
+        for ($i = 29; $i >= 0; $i--) {
+            $dateString = now()->subDays($i)->format('Y-m-d');
+            $group = $rawTrends->get($dateString);
+            $submissionTrends->push((object)[
+                'trend_date' => $dateString,
+                'count' => $group ? (float)(string)$group->count() : 0.0,
+                'short_date' => now()->subDays($i)->format('d M')
+            ]);
+        }
 
         // Top products by submission count
         $topProducts = MarketData::approved()
@@ -84,7 +87,7 @@ class AdminController extends Controller
 
         $data = $query->paginate(20)->withQueryString();
         $categories = Category::orderBy('name')->get();
-        $locations = MarketData::distinct()->pluck('location')->sort()->values();
+        $locations = collect(MarketData::raw()->distinct('location'))->sort()->values();
 
         return view('admin.data', compact('data', 'categories', 'locations'));
     }

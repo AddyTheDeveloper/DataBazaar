@@ -105,50 +105,68 @@
         @else
             {{-- Compact elegant header for active product state --}}
             <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 pb-6 border-b border-slate-200/60 dark:border-slate-800/60">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-5 border-b border-slate-200/60 dark:border-slate-800/60">
                     <div>
                         <div class="flex items-center gap-2">
                             <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-primary-100 dark:bg-primary-500/15 text-primary-700 dark:text-primary-400 ring-1 ring-primary-600/10 dark:ring-primary-400/20">Active Commodity</span>
-                            <span class="text-xs text-slate-400 dark:text-slate-500 font-medium">Real-time statistics</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500 font-medium">Real-time statistics & visual forecasting</span>
                         </div>
                         <h1 class="mt-2 text-3xl sm:text-4xl font-black text-slate-950 dark:text-white tracking-tight flex items-center gap-3">
                             {{ $selectedProduct }} <span class="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">Price Analytics</span>
                         </h1>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-xl">
-                            Analyze pricing metrics, regional dispersion, and volatility indicators for {{ $selectedProduct }} across active markets.
-                        </p>
+                    </div>
+                    <div>
+                        <a href="{{ route('public.intelligence') }}" class="btn-secondary !py-2 !px-4 text-xs font-bold flex items-center gap-2 shadow-sm rounded-xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200">
+                            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                            Back to Catalog
+                        </a>
+                    </div>
+                </div>
+
+                {{-- Dedicated Premium Controls Toolbar --}}
+                <div class="glass-card p-4 shadow-md border border-slate-200/60 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-5">
+                    {{-- Left Side: Date Filters --}}
+                    <div class="flex-1 flex flex-col sm:flex-row sm:items-center gap-3">
+                        <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-primary-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            Filter Observations:
+                        </span>
+                        <form method="GET" action="{{ route('public.intelligence') }}" class="flex flex-wrap items-center gap-3">
+                            <input type="hidden" name="product" value="{{ $selectedProduct }}">
+                            
+                            {{-- Premium Styled From Date --}}
+                            <div class="flex items-center gap-2 bg-slate-100/60 dark:bg-slate-900/65 px-3 py-2 rounded-xl border border-slate-200/60 dark:border-slate-800 shadow-inner">
+                                <span class="text-[10px] font-bold text-slate-450 dark:text-slate-500 uppercase tracking-wider">From</span>
+                                <input type="date" name="date_from" value="{{ $dateFrom }}" class="bg-transparent border-0 p-0 focus:ring-0 text-xs font-semibold text-slate-700 dark:text-slate-200 w-28 h-5 focus:outline-none cursor-pointer">
+                            </div>
+
+                            {{-- Premium Styled To Date --}}
+                            <div class="flex items-center gap-2 bg-slate-100/60 dark:bg-slate-900/65 px-3 py-2 rounded-xl border border-slate-200/60 dark:border-slate-800 shadow-inner">
+                                <span class="text-[10px] font-bold text-slate-450 dark:text-slate-500 uppercase tracking-wider">To</span>
+                                <input type="date" name="date_to" value="{{ $dateTo }}" class="bg-transparent border-0 p-0 focus:ring-0 text-xs font-semibold text-slate-700 dark:text-slate-200 w-28 h-5 focus:outline-none cursor-pointer">
+                            </div>
+
+                            <div class="flex items-center gap-1.5">
+                                <button type="submit" class="btn-primary !py-2 !px-4 text-xs font-bold shadow-sm rounded-xl transition-all duration-200">
+                                    Apply Filter
+                                </button>
+                                @if($dateFrom || $dateTo)
+                                    <a href="{{ route('public.intelligence', ['product' => $selectedProduct]) }}" class="btn-secondary !py-2 !px-3 text-xs font-bold rounded-xl transition-all duration-200 flex items-center justify-center">
+                                        Reset
+                                    </a>
+                                @endif
+                            </div>
+                        </form>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-3 w-full lg:w-auto">
-                        {{-- Filters Form --}}
-                        <div class="glass-card !p-2 shadow-sm border border-slate-200/60 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 w-full sm:w-auto">
-                            <form method="GET" action="{{ route('public.intelligence') }}" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                                <input type="hidden" name="product" value="{{ $selectedProduct }}">
-                                <div class="grid grid-cols-2 gap-2 flex-1 sm:flex-none">
-                                    <div>
-                                        <input type="date" name="date_from" value="{{ $dateFrom }}" class="form-input-custom !py-1 !px-2 !text-[11px] h-8 bg-transparent" placeholder="From Date">
-                                    </div>
-                                    <div>
-                                        <input type="date" name="date_to" value="{{ $dateTo }}" class="form-input-custom !py-1 !px-2 !text-[11px] h-8 bg-transparent" placeholder="To Date">
-                                    </div>
-                                </div>
-                                <div class="flex gap-1.5">
-                                    <button type="submit" class="btn-primary !py-1 !px-3 !text-[11px] h-8 shadow-sm flex-1 sm:flex-none">Apply</button>
-                                    @if($dateFrom || $dateTo)
-                                        <a href="{{ route('public.intelligence', ['product' => $selectedProduct]) }}" class="btn-secondary !py-1 !px-2 !text-[11px] h-8 flex items-center justify-center">Clear</a>
-                                    @endif
-                                </div>
-                            </form>
-                        </div>
-
-                        {{-- Search and Back actions --}}
-                        <div x-data="{ 
-                            query: '', 
-                            suggestions: [], 
-                            open: false,
-                            loading: false,
-                            fetchSuggestions() {
-                                if (this.query.length < 1) {
+                    {{-- Right Side: Fast Switcher Autocomplete --}}
+                    <div x-data="{ 
+                        query: '', 
+                        suggestions: [], 
+                        open: false,
+                        loading: false,
+                        fetchSuggestions() {
+                            if (this.query.length < 1) {
                                     this.suggestions = [];
                                     this.open = false;
                                     return;
@@ -168,57 +186,53 @@
                             selectSuggestion(item) {
                                 window.location.href = '{{ route('public.intelligence') }}?product=' + encodeURIComponent(item);
                             }
-                        }" class="relative w-full sm:w-56 z-40">
-                            <div class="flex items-center glass-card p-1 shadow-sm border border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 h-8">
-                                <div class="pl-2 text-slate-400">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                                </div>
-                                <input 
-                                    type="text" 
-                                    x-model="query" 
-                                    @input.debounce.250ms="fetchSuggestions()" 
-                                    @keydown.escape="open = false"
-                                    @keydown.enter="if (query.length > 0) { 
-                                        const matched = suggestions.find(s => s.toLowerCase() === query.trim().toLowerCase()) || suggestions[0] || query;
-                                        selectSuggestion(matched);
-                                    }"
-                                    @click.away="open = false"
-                                    placeholder="Change product..." 
-                                    class="w-full bg-transparent border-0 ring-0 focus:ring-0 text-[11px] font-semibold text-slate-900 dark:text-white placeholder-slate-400 pl-1.5 py-1"
-                                />
-                                <div x-show="loading" class="pr-2" x-cloak>
-                                    <svg class="animate-spin h-3 w-3 text-primary-500" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                </div>
-                                <a href="{{ route('public.intelligence') }}" class="btn-ghost !p-1.5 text-xs font-semibold mr-0.5 flex items-center justify-center rounded-lg border border-slate-200/40 dark:border-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800" title="Back to Catalog">
-                                    <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                                </a>
+                        }" class="relative w-full md:w-64 z-40">
+                        <div class="flex items-center bg-slate-100/60 dark:bg-slate-900/65 px-3 py-2 rounded-xl border border-slate-200/60 dark:border-slate-800 shadow-inner h-10">
+                            <div class="text-slate-450 dark:text-slate-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                             </div>
+                            <input 
+                                type="text" 
+                                x-model="query" 
+                                @input.debounce.250ms="fetchSuggestions()" 
+                                @keydown.escape="open = false"
+                                @keydown.enter="if (query.length > 0) { 
+                                    const matched = suggestions.find(s => s.toLowerCase() === query.trim().toLowerCase()) || suggestions[0] || query;
+                                    selectSuggestion(matched);
+                                }"
+                                @click.away="open = false"
+                                placeholder="Switch product..." 
+                                class="w-full bg-transparent border-0 ring-0 focus:ring-0 text-xs font-bold text-slate-800 dark:text-slate-200 placeholder-slate-450 dark:placeholder-slate-500 pl-2 py-0 focus:outline-none focus:border-0"
+                            />
+                            <div x-show="loading" class="pr-1" x-cloak>
+                                <svg class="animate-spin h-3.5 w-3.5 text-primary-500" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </div>
+                        </div>
 
-                            {{-- Autocomplete Dropdown list --}}
-                            <div 
-                                x-show="open" 
-                                x-transition:enter="transition ease-out duration-100"
-                                x-transition:enter-start="opacity-0 scale-95"
-                                x-transition:enter-end="opacity-100 scale-100"
-                                x-transition:leave="transition ease-in duration-75"
-                                x-transition:leave-start="opacity-100 scale-100"
-                                x-transition:leave-end="opacity-0 scale-95"
-                                class="absolute left-0 right-0 mt-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-xl overflow-hidden text-left z-50 max-h-56 overflow-y-auto" 
-                                x-cloak
-                            >
-                                <template x-for="item in suggestions" :key="item">
-                                    <button 
-                                        @click="selectSuggestion(item)"
-                                        class="w-full text-left px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800/30 last:border-b-0 transition-colors flex items-center justify-between"
-                                    >
-                                        <span x-text="item"></span>
-                                        <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                                    </button>
-                                </template>
-                            </div>
+                        {{-- Autocomplete Dropdown list --}}
+                        <div 
+                            x-show="open" 
+                            x-transition:enter="transition ease-out duration-100"
+                            x-transition:enter-start="opacity-0 scale-95"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-75"
+                            x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-95"
+                            class="absolute left-0 right-0 mt-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl overflow-hidden text-left z-50 max-h-56 overflow-y-auto" 
+                            x-cloak
+                        >
+                            <template x-for="item in suggestions" :key="item">
+                                <button 
+                                    @click="selectSuggestion(item)"
+                                    class="w-full text-left px-4 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800/30 last:border-b-0 transition-colors flex items-center justify-between"
+                                >
+                                    <span x-text="item"></span>
+                                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                </button>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -426,7 +440,7 @@
                         {{-- Chart Workspace Canvas & State Control Grid --}}
                         <div class="flex flex-col lg:flex-row gap-6">
                             {{-- Chart Container --}}
-                            <div class="flex-1 min-h-[340px] relative">
+                            <div class="flex-1 h-[380px] sm:h-[420px] relative">
                                 <canvas id="intelChart"></canvas>
                             </div>
 
